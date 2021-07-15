@@ -33,7 +33,6 @@ namespace FaceTrackerCli
             this.ファイルFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxPort = new System.Windows.Forms.ComboBox();
@@ -44,15 +43,18 @@ namespace FaceTrackerCli
             this.buttonServoLeft = new System.Windows.Forms.Button();
             this.buttonServoRight = new System.Windows.Forms.Button();
             this.buttonServoDown = new System.Windows.Forms.Button();
-            this.pictureBoxIpl1 = new OpenCvSharp.UserInterface.PictureBoxIpl();
+            this.buttonCamStart = new System.Windows.Forms.Button();
+            this.buttonCamStop = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl1)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -87,7 +89,7 @@ namespace FaceTrackerCli
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.flowLayoutPanel2);
+            this.splitContainer1.Panel1.Controls.Add(this.panel1);
             // 
             // splitContainer1.Panel2
             // 
@@ -95,16 +97,6 @@ namespace FaceTrackerCli
             this.splitContainer1.Size = new System.Drawing.Size(800, 404);
             this.splitContainer1.SplitterDistance = 549;
             this.splitContainer1.TabIndex = 2;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flowLayoutPanel2.Controls.Add(this.pictureBoxIpl1);
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(549, 404);
-            this.flowLayoutPanel2.TabIndex = 0;
             // 
             // flowLayoutPanel1
             // 
@@ -118,6 +110,8 @@ namespace FaceTrackerCli
             this.flowLayoutPanel1.Controls.Add(this.buttonServoLeft);
             this.flowLayoutPanel1.Controls.Add(this.buttonServoRight);
             this.flowLayoutPanel1.Controls.Add(this.buttonServoDown);
+            this.flowLayoutPanel1.Controls.Add(this.buttonCamStart);
+            this.flowLayoutPanel1.Controls.Add(this.buttonCamStop);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -222,14 +216,46 @@ namespace FaceTrackerCli
             this.buttonServoDown.UseVisualStyleBackColor = true;
             this.buttonServoDown.Click += new System.EventHandler(this.buttonServoDown_Click);
             // 
-            // pictureBoxIpl1
+            // buttonCamStart
             // 
-            this.pictureBoxIpl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxIpl1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBoxIpl1.Name = "pictureBoxIpl1";
-            this.pictureBoxIpl1.Size = new System.Drawing.Size(100, 0);
-            this.pictureBoxIpl1.TabIndex = 0;
-            this.pictureBoxIpl1.TabStop = false;
+            this.buttonCamStart.Location = new System.Drawing.Point(20, 346);
+            this.buttonCamStart.Margin = new System.Windows.Forms.Padding(20);
+            this.buttonCamStart.Name = "buttonCamStart";
+            this.buttonCamStart.Size = new System.Drawing.Size(75, 23);
+            this.buttonCamStart.TabIndex = 9;
+            this.buttonCamStart.Text = "カメラ起動";
+            this.buttonCamStart.UseVisualStyleBackColor = true;
+            this.buttonCamStart.Click += new System.EventHandler(this.buttonCamStart_Click);
+            // 
+            // buttonCamStop
+            // 
+            this.buttonCamStop.Location = new System.Drawing.Point(135, 346);
+            this.buttonCamStop.Margin = new System.Windows.Forms.Padding(20);
+            this.buttonCamStop.Name = "buttonCamStop";
+            this.buttonCamStop.Size = new System.Drawing.Size(75, 23);
+            this.buttonCamStop.TabIndex = 10;
+            this.buttonCamStop.Text = "カメラ停止";
+            this.buttonCamStop.UseVisualStyleBackColor = true;
+            this.buttonCamStop.Click += new System.EventHandler(this.buttonCamStop_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.pictureBox1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(549, 404);
+            this.panel1.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(549, 404);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // MainForm
             // 
@@ -242,7 +268,8 @@ namespace FaceTrackerCli
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "FaceTracker/Cli";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
@@ -251,10 +278,10 @@ namespace FaceTrackerCli
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -269,7 +296,6 @@ namespace FaceTrackerCli
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxPort;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.Button buttonDisconnect;
         private System.Windows.Forms.Label labelAngle;
@@ -277,7 +303,10 @@ namespace FaceTrackerCli
         private System.Windows.Forms.Button buttonServoLeft;
         private System.Windows.Forms.Button buttonServoRight;
         private System.Windows.Forms.Button buttonServoDown;
-        private OpenCvSharp.UserInterface.PictureBoxIpl pictureBoxIpl1;
+        private System.Windows.Forms.Button buttonCamStart;
+        private System.Windows.Forms.Button buttonCamStop;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

@@ -57,7 +57,7 @@ namespace FaceTrackerCli.service.BluetoothService
         /// </summary>
         public int YAngle
         {
-            get { return this.yAngle; }
+            get { return yAngle; }
             private set
             {
                 int angle = value;
@@ -77,12 +77,12 @@ namespace FaceTrackerCli.service.BluetoothService
         /// <param name="portName">COMポート名</param>
         public BluetoothService(string portName)
         {
-            this.bluetooth = new SerialPort();
-            this.bluetooth.BaudRate = BAUD_RATE;
-            this.bluetooth.PortName = portName;
+            bluetooth = new SerialPort();
+            bluetooth.BaudRate = BAUD_RATE;
+            bluetooth.PortName = portName;
 
-            this.XAngle = 0;
-            this.YAngle = 0;
+            XAngle = 0;
+            YAngle = 0;
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace FaceTrackerCli.service.BluetoothService
         /// </summary>
         public void Open()
         {
-            this.bluetooth.Open();
+            bluetooth.Open();
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace FaceTrackerCli.service.BluetoothService
         /// </summary>
         public void Close()
         {
-            this.bluetooth.Close();
+            bluetooth.Close();
         }
 
         /// <summary>
@@ -117,48 +117,48 @@ namespace FaceTrackerCli.service.BluetoothService
         /// <param name="angle">サーボを動作させるアングル(0~90)</param>
         private void SendCommand(int servoCh, int angle)
         {
-            if (!this.bluetooth.IsOpen) { return; }
+            if (!bluetooth.IsOpen) { return; }
 
             int ch = servoCh == 0 ? 0x0 : 0x80;
 
             char c = Convert.ToChar((ch | angle));
             byte[] cmd = new byte[] { Convert.ToByte(c) };
-            this.bluetooth.Write(cmd, 0, cmd.Length);
+            bluetooth.Write(cmd, 0, cmd.Length);
         }
 
         public int Recived()
         {
-            if (!this.bluetooth.IsOpen) { return -1; }
+            if (!bluetooth.IsOpen) { return -1; }
 
-            int data = this.bluetooth.ReadChar();
+            int data = bluetooth.ReadChar();
             return data;
         }
 
 
         public void ServoUp()
         {
-            this.YAngle += INCREASE_VALUE;
-            this.SendCommand(SERVO_Y_CHANNEL, YAngle);
+            YAngle += INCREASE_VALUE;
+            SendCommand(SERVO_Y_CHANNEL, YAngle);
         }
 
         public void ServoDown()
         {
-            this.YAngle -= INCREASE_VALUE;
-            this.SendCommand(SERVO_Y_CHANNEL, YAngle);
+            YAngle -= INCREASE_VALUE;
+            SendCommand(SERVO_Y_CHANNEL, YAngle);
         }
 
 
         public void ServoRight()
         {
-            this.XAngle += INCREASE_VALUE;
-            this.SendCommand(SERVO_X_CHANNEL, XAngle);
+            XAngle += INCREASE_VALUE;
+            SendCommand(SERVO_X_CHANNEL, XAngle);
         }
 
 
         public void ServoLeft()
         {
-            this.XAngle -= INCREASE_VALUE;
-            this.SendCommand(SERVO_X_CHANNEL, XAngle);
+            XAngle -= INCREASE_VALUE;
+            SendCommand(SERVO_X_CHANNEL, XAngle);
         }
     }
 }

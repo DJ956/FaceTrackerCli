@@ -1,4 +1,5 @@
 ﻿using FaceTrackerCli.service.BluetoothService;
+using FaceTrackerCli.service.CameraService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,8 +15,20 @@ namespace FaceTrackerCli
 {
     public partial class MainForm : Form
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
         private BluetoothService bluetoothService;
+        /// <summary>
+        /// カメラ接続サービス
+        /// </summary>
+        private CameraService cameraService;
+        /// <summary>
+        /// バックグラウンド
+        /// </summary>
+        private BackgroundWorker backgroundWorker;
+
+        private Graphics graphics;
 
 
         /// <summary>
@@ -30,19 +43,19 @@ namespace FaceTrackerCli
             get { return _connect; }
             set
             {
-                this._connect = value;
+                _connect = value;
                 //接続
                 if (_connect)
                 {
-                    this.comboBoxPort.Enabled = false;
-                    this.buttonConnect.Enabled = false;
-                    this.buttonDisconnect.Enabled = true;
+                    comboBoxPort.Enabled = false;
+                    buttonConnect.Enabled = false;
+                    buttonDisconnect.Enabled = true;
                 }
                 else//切断
                 {
-                    this.comboBoxPort.Enabled = true;
-                    this.buttonConnect.Enabled = true;
-                    this.buttonDisconnect.Enabled = false;
+                    comboBoxPort.Enabled = true;
+                    buttonConnect.Enabled = true;
+                    buttonDisconnect.Enabled = false;
                 }
             }
         }
@@ -50,8 +63,17 @@ namespace FaceTrackerCli
         public MainForm()
         {
             InitializeComponent();
-            this.comboBoxPort.Items.AddRange(BluetoothService.GetPortNames());
-            this.Connect = false;
+
+            backgroundWorker = new BackgroundWorker();
+            backgroundWorker.WorkerSupportsCancellation = true;
+            backgroundWorker.DoWork += backgroundWorkerDoWork;
+
+            comboBoxPort.Items.AddRange(BluetoothService.GetPortNames());
+            Connect = false;
+
+            cameraService = new CameraService();
+
+            graphics = pictureBox1.CreateGraphics();
         }
 
 
@@ -62,12 +84,30 @@ namespace FaceTrackerCli
         /// <param name="yAngle"></param>
         private void setAngleText(int xAngle, int yAngle)
         {
-            this.labelAngle.Text = $"サーボアングル - X:{xAngle} Y:{yAngle}";
+            labelAngle.Text = $"サーボアングル - X:{xAngle} Y:{yAngle}";
+        }
+
+        /// <summary>
+        /// バックグラウンド処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void backgroundWorkerDoWork(object sender, DoWorkEventArgs e)
+        {
+            while (!backgroundWorker.CancellationPending)
+            {
+                cameraService.Capture();
+                graphics.DrawImage(cameraService.CaptureImg, 0, 0, CameraService.WIDTH, CameraService.HEIGHT);
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+        }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            buttonCamStop.PerformClick();
         }
 
         /// <summary>
@@ -77,15 +117,15 @@ namespace FaceTrackerCli
         /// <param name="e"></param>
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (this.bluetoothService == null || !this.Connect) { return; }
+            if (bluetoothService == null || !Connect) { return; }
             //アップ
-            if (e.KeyCode == Keys.Left) { this.buttonServoUp.PerformClick(); }
+            if (e.KeyCode == Keys.Left) { buttonServoUp.PerformClick(); }
             //ダウン
-            if (e.KeyCode == Keys.Down) { this.buttonServoDown.PerformClick(); }
+            if (e.KeyCode == Keys.Down) { buttonServoDown.PerformClick(); }
             //レフト
-            if (e.KeyCode == Keys.Left) { this.buttonServoLeft.PerformClick(); }
+            if (e.KeyCode == Keys.Left) { buttonServoLeft.PerformClick(); }
             //ライト
-            if (e.KeyCode == Keys.Right) { this.buttonServoRight.PerformClick(); }
+            if (e.KeyCode == Keys.Right) { buttonServoRight.PerformClick(); }
         }
 
         /// <summary>
@@ -95,15 +135,15 @@ namespace FaceTrackerCli
         /// <param name="e"></param>
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            if (this.comboBoxPort.SelectedIndex == -1)
+            if (comboBoxPort.SelectedIndex == -1)
             {
                 MessageBox.Show("接続するポートを選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            string portName = this.comboBoxPort.SelectedItem.ToString();
-            this.bluetoothService = new BluetoothService(portName);
-            this.Connect = true;
+            string portName = comboBoxPort.SelectedItem.ToString();
+            bluetoothService = new BluetoothService(portName);
+            Connect = true;
         }
 
         /// <summary>
@@ -114,32 +154,66 @@ namespace FaceTrackerCli
         private void buttonDisconnect_Click(object sender, EventArgs e)
         {
             //切断
-            if (this.bluetoothService != null) { this.bluetoothService.Close(); }
-            this.Connect = false;
+            if (bluetoothService != null) { bluetoothService.Close(); }
+            Connect = false;
         }
+
 
         private void buttonServoUp_Click(object sender, EventArgs e)
         {
-            this.bluetoothService.ServoUp();
-            this.setAngleText(this.bluetoothService.XAngle, this.bluetoothService.YAngle);
+            bluetoothService.ServoUp();
+            setAngleText(bluetoothService.XAngle, bluetoothService.YAngle);
         }
 
         private void buttonServoDown_Click(object sender, EventArgs e)
         {
-            this.bluetoothService.ServoDown();
-            this.setAngleText(this.bluetoothService.XAngle, this.bluetoothService.YAngle);
+            bluetoothService.ServoDown();
+            setAngleText(bluetoothService.XAngle, bluetoothService.YAngle);
         }
 
         private void buttonServoLeft_Click(object sender, EventArgs e)
         {
-            this.bluetoothService.ServoLeft();
-            this.setAngleText(this.bluetoothService.XAngle, this.bluetoothService.YAngle);
+            bluetoothService.ServoLeft();
+            setAngleText(bluetoothService.XAngle, bluetoothService.YAngle);
         }
 
         private void buttonServoRight_Click(object sender, EventArgs e)
         {
-            this.bluetoothService.ServoRight();
-            this.setAngleText(this.bluetoothService.XAngle, this.bluetoothService.YAngle);
+            bluetoothService.ServoRight();
+            setAngleText(bluetoothService.XAngle, bluetoothService.YAngle);
         }
+
+
+        /// <summary>
+        /// カメラ起動
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonCamStart_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                cameraService.Open();
+                backgroundWorker.RunWorkerAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// カメラ停止
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonCamStop_Click(object sender, EventArgs e)
+        {
+            backgroundWorker.CancelAsync();
+            cameraService.Close();
+        }
+
+
     }
 }
