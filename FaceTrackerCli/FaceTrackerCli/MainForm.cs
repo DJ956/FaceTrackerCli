@@ -50,12 +50,22 @@ namespace FaceTrackerCli
                     comboBoxPort.Enabled = false;
                     buttonConnect.Enabled = false;
                     buttonDisconnect.Enabled = true;
+                    //サーボ操作ボタン
+                    buttonServoUp.Enabled = false;
+                    buttonServoDown.Enabled = false;
+                    buttonServoLeft.Enabled = false;
+                    buttonServoRight.Enabled = false;
                 }
                 else//切断
                 {
                     comboBoxPort.Enabled = true;
                     buttonConnect.Enabled = true;
                     buttonDisconnect.Enabled = false;
+                    //サーボ操作ボタン
+                    buttonServoUp.Enabled = false;
+                    buttonServoDown.Enabled = false;
+                    buttonServoLeft.Enabled = false;
+                    buttonServoRight.Enabled = false;
                 }
             }
         }
