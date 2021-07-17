@@ -86,6 +86,7 @@ namespace FaceTrackerCli
             backgroundWorker.DoWork += backgroundWorkerDoWork;
 
             comboBoxPort.Items.AddRange(BluetoothService.GetPortNames());
+            comboBoxPort.SelectedIndex = 0;
             Connect = false;
 
             cameraService = new CameraService();
@@ -193,6 +194,7 @@ namespace FaceTrackerCli
             string portName = comboBoxPort.SelectedItem.ToString();
             bluetoothService = new BluetoothService(portName);
             bluetoothService.Open();
+            setAngleText(bluetoothService.XAngle, bluetoothService.YAngle);
             Connect = true;
         }
 

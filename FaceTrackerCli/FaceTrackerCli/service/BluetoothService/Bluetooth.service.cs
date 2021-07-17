@@ -81,8 +81,8 @@ namespace FaceTrackerCli.service.BluetoothService
             bluetooth.BaudRate = BAUD_RATE;
             bluetooth.PortName = portName;
 
-            XAngle = 0;
-            YAngle = 0;
+            XAngle = 48;
+            YAngle = 69;
         }
 
         /// <summary>
@@ -140,13 +140,13 @@ namespace FaceTrackerCli.service.BluetoothService
 
         public byte[] ServoUp()
         {
-            YAngle += INCREASE_VALUE;
+            YAngle -= INCREASE_VALUE;
             return SendCommand(SERVO_Y_CHANNEL, YAngle);
         }
 
         public byte[] ServoDown()
         {
-            YAngle -= INCREASE_VALUE;
+            YAngle += INCREASE_VALUE;
             return SendCommand(SERVO_Y_CHANNEL, YAngle);
         }
 
