@@ -17,11 +17,11 @@ namespace FaceTrackerCli.service.BluetoothService
         /// <summary>
         /// サーボのX軸のチャンネル
         /// </summary>
-        private const int SERVO_X_CHANNEL = 0;
+        private const int SERVO_X_CHANNEL = 0x00;
         /// <summary>
         /// サーボのY軸のチャンネル
         /// </summary>
-        private const int SERVO_Y_CHANNEL = 1;
+        private const int SERVO_Y_CHANNEL = 0x01;
 
         /// <summary>
         /// サーボを1回の操作で動かすアングル値
@@ -118,7 +118,7 @@ namespace FaceTrackerCli.service.BluetoothService
         /// <returns>送信したコマンド</returns>
         private byte[] SendCommand(int servoCh, int angle)
         {
-           if (!bluetooth.IsOpen) { return new byte[0]; }
+            if (!bluetooth.IsOpen) { return new byte[0]; }
 
             int ch = servoCh == 0 ? 0x0 : 0x80;
 

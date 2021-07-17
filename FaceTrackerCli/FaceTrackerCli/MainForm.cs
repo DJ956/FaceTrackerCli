@@ -103,7 +103,22 @@ namespace FaceTrackerCli
         /// <param name="yAngle"></param>
         private void setAngleText(int xAngle, int yAngle)
         {
-            labelAngle.Text = $"サーボアングル - X:{xAngle} Y:{yAngle}";
+            labelAngle.Text = $"サーボアングル - X:{xAngle * 2} Y:{yAngle * 2}";
+        }
+
+        /// <summary>
+        /// 送信コマンドをラベルにテキスト設定する
+        /// </summary>
+        /// <param name="cmd"></param>
+        private void setCmdText(byte[] cmd)
+        {
+            if (cmd.Length == 0) { return; }
+            const int mask = 0x80;
+            int data = Convert.ToInt32(cmd[0]);
+            data = data & ~mask;
+            data = data * 2;
+            statusLabelCmd.Text = string.Format("Command:0x{0:X2} - 0b{1} - Angle:{2}",
+                cmd[0], Convert.ToString(cmd[0], 2), data);
         }
 
         /// <summary>
@@ -196,25 +211,30 @@ namespace FaceTrackerCli
 
         private void buttonServoUp_Click(object sender, EventArgs e)
         {
-            bluetoothService.ServoUp();
+            byte[] cmd = bluetoothService.ServoUp();
+            setCmdText(cmd);
             setAngleText(bluetoothService.XAngle, bluetoothService.YAngle);
+
         }
 
         private void buttonServoDown_Click(object sender, EventArgs e)
         {
-            bluetoothService.ServoDown();
+            byte[] cmd = bluetoothService.ServoDown();
+            setCmdText(cmd);
             setAngleText(bluetoothService.XAngle, bluetoothService.YAngle);
         }
 
         private void buttonServoLeft_Click(object sender, EventArgs e)
         {
-            bluetoothService.ServoLeft();
+            byte[] cmd = bluetoothService.ServoLeft();
+            setCmdText(cmd);
             setAngleText(bluetoothService.XAngle, bluetoothService.YAngle);
         }
 
         private void buttonServoRight_Click(object sender, EventArgs e)
         {
-            bluetoothService.ServoRight();
+            byte[] cmd = bluetoothService.ServoRight();
+            setCmdText(cmd);
             setAngleText(bluetoothService.XAngle, bluetoothService.YAngle);
         }
 

@@ -47,7 +47,9 @@ namespace FaceTrackerCli
             this.buttonServoDown = new System.Windows.Forms.Button();
             this.buttonCamStart = new System.Windows.Forms.Button();
             this.buttonCamStop = new System.Windows.Forms.Button();
+            this.statusLabelCmd = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -63,7 +65,7 @@ namespace FaceTrackerCli
             this.ファイルFToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(853, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -75,9 +77,11 @@ namespace FaceTrackerCli
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabelCmd});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 497);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(853, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -94,8 +98,8 @@ namespace FaceTrackerCli
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel1);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 404);
-            this.splitContainer1.SplitterDistance = 549;
+            this.splitContainer1.Size = new System.Drawing.Size(853, 473);
+            this.splitContainer1.SplitterDistance = 585;
             this.splitContainer1.TabIndex = 2;
             // 
             // panel1
@@ -104,7 +108,7 @@ namespace FaceTrackerCli
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(549, 404);
+            this.panel1.Size = new System.Drawing.Size(585, 473);
             this.panel1.TabIndex = 0;
             // 
             // pictureBox1
@@ -113,7 +117,7 @@ namespace FaceTrackerCli
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(549, 404);
+            this.pictureBox1.Size = new System.Drawing.Size(585, 473);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -135,7 +139,7 @@ namespace FaceTrackerCli
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(247, 404);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(264, 473);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -258,11 +262,17 @@ namespace FaceTrackerCli
             this.buttonCamStop.UseVisualStyleBackColor = true;
             this.buttonCamStop.Click += new System.EventHandler(this.buttonCamStop_Click);
             // 
+            // statusLabelCmd
+            // 
+            this.statusLabelCmd.Name = "statusLabelCmd";
+            this.statusLabelCmd.Size = new System.Drawing.Size(64, 17);
+            this.statusLabelCmd.Text = "Command:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(853, 519);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -275,6 +285,8 @@ namespace FaceTrackerCli
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -308,6 +320,7 @@ namespace FaceTrackerCli
         private System.Windows.Forms.Button buttonCamStop;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabelCmd;
     }
 }
 
