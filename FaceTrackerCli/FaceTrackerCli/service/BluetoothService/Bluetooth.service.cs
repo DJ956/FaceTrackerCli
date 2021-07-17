@@ -118,7 +118,7 @@ namespace FaceTrackerCli.service.BluetoothService
         /// <returns>送信したコマンド</returns>
         private byte[] SendCommand(int servoCh, int angle)
         {
-            if (!bluetooth.IsOpen) { return new byte[0]; }
+           if (!bluetooth.IsOpen) { return new byte[0]; }
 
             int ch = servoCh == 0 ? 0x0 : 0x80;
 

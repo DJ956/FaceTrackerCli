@@ -177,6 +177,7 @@ namespace FaceTrackerCli
 
             string portName = comboBoxPort.SelectedItem.ToString();
             bluetoothService = new BluetoothService(portName);
+            bluetoothService.Open();
             Connect = true;
         }
 
