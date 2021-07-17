@@ -1,13 +1,12 @@
 ﻿using FaceTrackerCli.service.BluetoothService;
 using FaceTrackerCli.service.CameraService;
+using FaceTrackerCli.service.DrawingService;
+using FaceTrackerCli.service.FaceDetectService;
+using OpenCvSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -23,6 +22,14 @@ namespace FaceTrackerCli
         /// カメラ接続サービス
         /// </summary>
         private CameraService cameraService;
+        /// <summary>
+        /// 顔識別サービス
+        /// </summary>
+        private FaceDetectService faceDetectService;
+        /// <summary>
+        /// 図形描画サービス
+        /// </summary>
+        private DrawingService drawingService;
         /// <summary>
         /// バックグラウンド
         /// </summary>
@@ -51,10 +58,10 @@ namespace FaceTrackerCli
                     buttonConnect.Enabled = false;
                     buttonDisconnect.Enabled = true;
                     //サーボ操作ボタン
-                    buttonServoUp.Enabled = false;
-                    buttonServoDown.Enabled = false;
-                    buttonServoLeft.Enabled = false;
-                    buttonServoRight.Enabled = false;
+                    buttonServoUp.Enabled = true;
+                    buttonServoDown.Enabled = true;
+                    buttonServoLeft.Enabled = true;
+                    buttonServoRight.Enabled = true;
                 }
                 else//切断
                 {
@@ -82,6 +89,8 @@ namespace FaceTrackerCli
             Connect = false;
 
             cameraService = new CameraService();
+            drawingService = new DrawingService(pictureBox1.Width, pictureBox1.Height);
+            faceDetectService = new FaceDetectService();
 
             graphics = pictureBox1.CreateGraphics();
         }
@@ -107,6 +116,20 @@ namespace FaceTrackerCli
             while (!backgroundWorker.CancellationPending)
             {
                 cameraService.Capture();
+                drawingService.DrawCenterRectangle(cameraService.frame);
+                if (bluetoothService != null)
+                {
+                    string text = $"Servo Angle - X:{bluetoothService.XAngle} Y:{bluetoothService.YAngle}";
+                    drawingService.PutText(cameraService.frame, text);
+                }
+
+                List<Rect> rects = new List<Rect>(faceDetectService.DetectFace(cameraService.frame));
+                Parallel.ForEach(rects, r =>
+                {
+                    drawingService.DrawRectangle(cameraService.frame, r, Scalar.Red);
+                });
+
+
                 graphics.DrawImage(cameraService.CaptureImg, 0, 0, CameraService.WIDTH, CameraService.HEIGHT);
             }
         }
@@ -118,6 +141,7 @@ namespace FaceTrackerCli
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             buttonCamStop.PerformClick();
+            faceDetectService.Dispose();
         }
 
         /// <summary>

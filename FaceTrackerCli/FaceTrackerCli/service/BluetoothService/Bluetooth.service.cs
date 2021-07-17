@@ -115,15 +115,18 @@ namespace FaceTrackerCli.service.BluetoothService
         /// </summary>
         /// <param name="servoCh">動作させるサーボのチャンネル</param>
         /// <param name="angle">サーボを動作させるアングル(0~90)</param>
-        private void SendCommand(int servoCh, int angle)
+        /// <returns>送信したコマンド</returns>
+        private byte[] SendCommand(int servoCh, int angle)
         {
-            if (!bluetooth.IsOpen) { return; }
+            if (!bluetooth.IsOpen) { return new byte[0]; }
 
             int ch = servoCh == 0 ? 0x0 : 0x80;
 
             char c = Convert.ToChar((ch | angle));
             byte[] cmd = new byte[] { Convert.ToByte(c) };
             bluetooth.Write(cmd, 0, cmd.Length);
+
+            return cmd;
         }
 
         public int Recived()
@@ -135,30 +138,30 @@ namespace FaceTrackerCli.service.BluetoothService
         }
 
 
-        public void ServoUp()
+        public byte[] ServoUp()
         {
             YAngle += INCREASE_VALUE;
-            SendCommand(SERVO_Y_CHANNEL, YAngle);
+            return SendCommand(SERVO_Y_CHANNEL, YAngle);
         }
 
-        public void ServoDown()
+        public byte[] ServoDown()
         {
             YAngle -= INCREASE_VALUE;
-            SendCommand(SERVO_Y_CHANNEL, YAngle);
+            return SendCommand(SERVO_Y_CHANNEL, YAngle);
         }
 
 
-        public void ServoRight()
+        public byte[] ServoRight()
         {
             XAngle += INCREASE_VALUE;
-            SendCommand(SERVO_X_CHANNEL, XAngle);
+            return SendCommand(SERVO_X_CHANNEL, XAngle);
         }
 
 
-        public void ServoLeft()
+        public byte[] ServoLeft()
         {
             XAngle -= INCREASE_VALUE;
-            SendCommand(SERVO_X_CHANNEL, XAngle);
+            return SendCommand(SERVO_X_CHANNEL, XAngle);
         }
     }
 }

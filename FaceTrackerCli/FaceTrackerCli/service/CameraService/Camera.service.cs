@@ -17,7 +17,8 @@ namespace FaceTrackerCli.service.CameraService
         public Bitmap CaptureImg { get; set; }
 
         private VideoCapture capture;
-        private Mat frame;
+
+        public Mat frame { get; private set; }
 
         public CameraService()
         {
