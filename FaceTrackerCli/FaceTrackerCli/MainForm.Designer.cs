@@ -32,6 +32,7 @@ namespace FaceTrackerCli
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ファイルFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusLabelCmd = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -47,7 +48,8 @@ namespace FaceTrackerCli
             this.buttonServoDown = new System.Windows.Forms.Button();
             this.buttonCamStart = new System.Windows.Forms.Button();
             this.buttonCamStop = new System.Windows.Forms.Button();
-            this.statusLabelCmd = new System.Windows.Forms.ToolStripStatusLabel();
+            this.buttonChangeCamera = new System.Windows.Forms.Button();
+            this.exitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -71,7 +73,10 @@ namespace FaceTrackerCli
             // 
             // ファイルFToolStripMenuItem
             // 
+            this.ファイルFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitMenuItem});
             this.ファイルFToolStripMenuItem.Name = "ファイルFToolStripMenuItem";
+            this.ファイルFToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
             this.ファイルFToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.ファイルFToolStripMenuItem.Text = "ファイル(&F)";
             // 
@@ -84,6 +89,12 @@ namespace FaceTrackerCli
             this.statusStrip1.Size = new System.Drawing.Size(853, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabelCmd
+            // 
+            this.statusLabelCmd.Name = "statusLabelCmd";
+            this.statusLabelCmd.Size = new System.Drawing.Size(64, 17);
+            this.statusLabelCmd.Text = "Command:";
             // 
             // splitContainer1
             // 
@@ -99,8 +110,8 @@ namespace FaceTrackerCli
             // 
             this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel1);
             this.splitContainer1.Size = new System.Drawing.Size(853, 473);
-            this.splitContainer1.SplitterDistance = 585;
-            this.splitContainer1.TabIndex = 2;
+            this.splitContainer1.SplitterDistance = 613;
+            this.splitContainer1.TabIndex = 10000;
             // 
             // panel1
             // 
@@ -108,7 +119,7 @@ namespace FaceTrackerCli
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(585, 473);
+            this.panel1.Size = new System.Drawing.Size(613, 473);
             this.panel1.TabIndex = 0;
             // 
             // pictureBox1
@@ -117,7 +128,7 @@ namespace FaceTrackerCli
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(585, 473);
+            this.pictureBox1.Size = new System.Drawing.Size(613, 473);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -136,10 +147,11 @@ namespace FaceTrackerCli
             this.flowLayoutPanel1.Controls.Add(this.buttonServoDown);
             this.flowLayoutPanel1.Controls.Add(this.buttonCamStart);
             this.flowLayoutPanel1.Controls.Add(this.buttonCamStop);
+            this.flowLayoutPanel1.Controls.Add(this.buttonChangeCamera);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(264, 473);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(236, 473);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -160,7 +172,7 @@ namespace FaceTrackerCli
             this.comboBoxPort.Margin = new System.Windows.Forms.Padding(0, 15, 10, 10);
             this.comboBoxPort.Name = "comboBoxPort";
             this.comboBoxPort.Size = new System.Drawing.Size(154, 20);
-            this.comboBoxPort.TabIndex = 1;
+            this.comboBoxPort.TabIndex = 0;
             // 
             // buttonConnect
             // 
@@ -262,11 +274,25 @@ namespace FaceTrackerCli
             this.buttonCamStop.UseVisualStyleBackColor = true;
             this.buttonCamStop.Click += new System.EventHandler(this.buttonCamStop_Click);
             // 
-            // statusLabelCmd
+            // buttonChangeCamera
             // 
-            this.statusLabelCmd.Name = "statusLabelCmd";
-            this.statusLabelCmd.Size = new System.Drawing.Size(64, 17);
-            this.statusLabelCmd.Text = "Command:";
+            this.buttonChangeCamera.Location = new System.Drawing.Point(80, 409);
+            this.buttonChangeCamera.Margin = new System.Windows.Forms.Padding(80, 20, 20, 20);
+            this.buttonChangeCamera.Name = "buttonChangeCamera";
+            this.buttonChangeCamera.Size = new System.Drawing.Size(80, 23);
+            this.buttonChangeCamera.TabIndex = 11;
+            this.buttonChangeCamera.Text = "カメラ切り替え";
+            this.buttonChangeCamera.UseVisualStyleBackColor = true;
+            this.buttonChangeCamera.Click += new System.EventHandler(this.buttonChangeCamera_Click);
+            // 
+            // exitMenuItem
+            // 
+            this.exitMenuItem.Name = "exitMenuItem";
+            this.exitMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.X)));
+            this.exitMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.exitMenuItem.Text = "終了(&X)";
+            this.exitMenuItem.Click += new System.EventHandler(this.exitMenuItem_Click);
             // 
             // MainForm
             // 
@@ -276,13 +302,14 @@ namespace FaceTrackerCli
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "FaceTracker/Cli";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -321,6 +348,8 @@ namespace FaceTrackerCli
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripStatusLabel statusLabelCmd;
+        private System.Windows.Forms.Button buttonChangeCamera;
+        private System.Windows.Forms.ToolStripMenuItem exitMenuItem;
     }
 }
 

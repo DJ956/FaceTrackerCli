@@ -42,6 +42,7 @@ namespace FaceTrackerCli.service.DrawingService
         /// <param name="img"></param>
         public void DrawCenterRectangle(Mat img)
         {
+            if (img == null || img.IsDisposed) { return; }
             Cv2.Rectangle(img, new Rect(cx, cy, 5, 5), Scalar.Red, 1);
             Cv2.Rectangle(img, CENTER_RECT, Scalar.Blue, 1);
         }
@@ -54,6 +55,7 @@ namespace FaceTrackerCli.service.DrawingService
         /// <param name="scalar"></param>
         public void DrawRectangle(Mat img, Rect rect, Scalar scalar)
         {
+            if (img == null || img.IsDisposed) { return; }
             Cv2.Rectangle(img, rect, scalar, 1);
         }
 
@@ -64,6 +66,7 @@ namespace FaceTrackerCli.service.DrawingService
         /// <param name="text"></param>
         public void PutText(Mat img, string text)
         {
+            if (img == null || img.IsDisposed) { return; }
             Cv2.PutText(img, text, new Point(fx, fy), HersheyFonts.HersheyPlain, 1, Scalar.Red);
         }
 

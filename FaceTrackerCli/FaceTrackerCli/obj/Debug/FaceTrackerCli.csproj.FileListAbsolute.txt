@@ -62,3 +62,7 @@ C:\Users\user\Documents\GitHub\FaceTrackerCli\FaceTrackerCli\FaceTrackerCli\obj\
 C:\Users\user\Documents\GitHub\FaceTrackerCli\FaceTrackerCli\FaceTrackerCli\obj\Debug\FaceTrackerCli.exe
 C:\Users\user\Documents\GitHub\FaceTrackerCli\FaceTrackerCli\FaceTrackerCli\obj\Debug\FaceTrackerCli.pdb
 C:\Users\dexte\Documents\GitHub\FaceTrackerCli\FaceTrackerCli\FaceTrackerCli\bin\Debug\haarcascade_frontalface_default.xml
+C:\Users\dexte\Documents\GitHub\FaceTrackerCli\FaceTrackerCli\FaceTrackerCli\bin\Debug\FaceTrackerCli.exe.manifest
+C:\Users\dexte\Documents\GitHub\FaceTrackerCli\FaceTrackerCli\FaceTrackerCli\bin\Debug\FaceTrackerCli.application
+C:\Users\dexte\Documents\GitHub\FaceTrackerCli\FaceTrackerCli\FaceTrackerCli\obj\Debug\FaceTrackerCli.exe.manifest
+C:\Users\dexte\Documents\GitHub\FaceTrackerCli\FaceTrackerCli\FaceTrackerCli\obj\Debug\FaceTrackerCli.application

@@ -26,7 +26,7 @@ namespace FaceTrackerCli.service.BluetoothService
         /// <summary>
         /// サーボを1回の操作で動かすアングル値
         /// </summary>
-        private const int INCREASE_VALUE = 3;
+        private const int INCREASE_VALUE = 2;
 
         /// <summary>
         /// X座標アングル
@@ -68,7 +68,9 @@ namespace FaceTrackerCli.service.BluetoothService
             }
         }
 
-
+        /// <summary>
+        /// シリアル通信 HC-05を想定
+        /// </summary>
         private SerialPort bluetooth;
 
         /// <summary>
@@ -89,26 +91,17 @@ namespace FaceTrackerCli.service.BluetoothService
         /// COMポート名を取得する
         /// </summary>
         /// <returns></returns>
-        public static string[] GetPortNames()
-        {
-            return SerialPort.GetPortNames();
-        }
+        public static string[] GetPortNames() { return SerialPort.GetPortNames(); }
 
         /// <summary>
         /// シリアルポートを接続する
         /// </summary>
-        public void Open()
-        {
-            bluetooth.Open();
-        }
+        public void Open() { bluetooth.Open(); }
 
         /// <summary>
         /// シリアルポートを切断する
         /// </summary>
-        public void Close()
-        {
-            bluetooth.Close();
-        }
+        public void Close() { bluetooth.Close(); }
 
         /// <summary>
         /// サーボモータを動作させる
