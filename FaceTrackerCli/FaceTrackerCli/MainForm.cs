@@ -99,10 +99,19 @@ namespace FaceTrackerCli
             comboBoxPort.Items.AddRange(BluetoothService.GetPortNames());
             comboBoxPort.SelectedIndex = 0;
             Connect = false;
-            //サービス初期化
-            cameraService = new CameraService();
-            drawingService = new DrawingService(pictureBox1.Width, pictureBox1.Height);
-            faceDetectService = new FaceDetectService();
+
+            try
+            {
+                //サービス初期化
+                cameraService = new CameraService();
+                drawingService = new DrawingService(pictureBox1.Width, pictureBox1.Height);
+                faceDetectService = new FaceDetectService();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
 
             graphics = pictureBox1.CreateGraphics();
 
