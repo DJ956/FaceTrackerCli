@@ -97,7 +97,7 @@ namespace FaceTrackerCli
             backgroundWorker.DoWork += backgroundWorkerDoWork;
             //シリアルポート名設定
             comboBoxPort.Items.AddRange(BluetoothService.GetPortNames());
-            comboBoxPort.SelectedIndex = 0;
+            if(comboBoxPort.Items.Count > 0) { comboBoxPort.SelectedIndex = 0; }
             Connect = false;
 
             try
